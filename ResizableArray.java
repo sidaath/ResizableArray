@@ -64,7 +64,7 @@ public class ResizableArray{
             }
         }
 
-        
+        scanner.close();
     }
 
     private static int[] resizeArray(int[] currentArray){
