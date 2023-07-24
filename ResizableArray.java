@@ -16,6 +16,7 @@ public class ResizableArray{
             System.out.println("1. view array");
             System.out.println("2. add num");
             System.out.println("3. Delete num at index");
+            System.out.println("4. Insert num at index");
             System.out.println("Quit - Q");
 
             String choice = scanner.nextLine();
@@ -51,15 +52,32 @@ public class ResizableArray{
                     freeInt = freeInt + 1;
                     usedInt = usedInt - 1;
                     break;
+                    
+                case "4":
+                    System.out.println("Enter number to insert:");
+                    int num = scanner.nextInt();
+                    System.out.println("Enter index to insert at: ");
+                    int index = scanner.nextInt();
+                    int[] addRes2 = new int[2];
+                    addRes2 = enterAtIndex(num, index, freeInt, usedInt, currentArray);
+                    usedInt = addRes2[0];
+                    freeInt = addRes2[1];
+                    if(freeInt <= currentArray.length/4){
+                        System.out.println("Resizing array");
+                        System.out.println("Old array len = "+currentArray.length);
+                        System.err.println("Available slots old = "+freeInt);
+                        currentArray = resizeArray(currentArray);
+                        freeInt = currentArray.length - usedInt;
+                        System.out.println("New array len = "+currentArray.length);
+                        System.err.println("Available slots new = "+freeInt);
+                    }
+                    break;
                 
                 case "Q":
                     cont = false;
                     break;
                 case "q":
                     cont = false;
-                    break;
-            
-                default:
                     break;
             }
         }
@@ -106,5 +124,19 @@ public class ResizableArray{
         }
 
         return temp;
+    }
+
+    private static int[] enterAtIndex (int num, int index, int freePos,int usedPos, int[] array){
+        for(int i = usedPos; i > index; i--){
+            array[i] = array[i-1];
+        }
+        array[index] = num;
+        usedPos++;
+        freePos--;
+        int[] ret = new int[2];
+        ret[0] = usedPos;
+        ret[1] = freePos;
+        return ret;
+
     }
 }
