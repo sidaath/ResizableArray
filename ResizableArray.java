@@ -1,91 +1,6 @@
-import java.util.Scanner;
-
 public class ResizableArray{
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int[] initArray = new int[8];
-        int[] currentArray = initArray;
-        int usedInt = 0;
-        int freeInt = 8;
-        boolean cont = true;
-        
-
-        while (cont) {
-            System.out.println("Pick Option");
-            System.out.println("1. view array");
-            System.out.println("2. add num");
-            System.out.println("3. Delete num at index");
-            System.out.println("4. Insert num at index");
-            System.out.println("Quit - Q");
-
-            String choice = scanner.nextLine();
-            
-            switch (choice) {
-                case "1":
-                    printArray(currentArray);
-                    break;
-                
-                case "2":
-                    System.out.println("enter number:");
-                    int input = scanner.nextInt();
-                    int[] addRes = new int[2];
-                    addRes = addNum(input, currentArray, freeInt, usedInt);
-                    usedInt = addRes[0];
-                    freeInt = addRes[1];
-
-                    if(freeInt <= currentArray.length/4){
-                        System.out.println("Resizing array");
-                        System.out.println("Old array len = "+currentArray.length);
-                        System.err.println("Available slots old = "+freeInt);
-                        currentArray = resizeArray(currentArray);
-                        freeInt = currentArray.length - usedInt;
-                        System.out.println("New array len = "+currentArray.length);
-                        System.err.println("Available slots new = "+freeInt);
-                    }
-                    break;
-
-                case "3":
-                    System.out.println("Enter index of number to delete");
-                    int res = deleteByIndex(scanner.nextInt(), currentArray);
-                    System.out.println("Deleted num "+res);
-                    freeInt = freeInt + 1;
-                    usedInt = usedInt - 1;
-                    break;
-                    
-                case "4":
-                    System.out.println("Enter number to insert:");
-                    int num = scanner.nextInt();
-                    System.out.println("Enter index to insert at: ");
-                    int index = scanner.nextInt();
-                    int[] addRes2 = new int[2];
-                    addRes2 = enterAtIndex(num, index, freeInt, usedInt, currentArray);
-                    usedInt = addRes2[0];
-                    freeInt = addRes2[1];
-                    if(freeInt <= currentArray.length/4){
-                        System.out.println("Resizing array");
-                        System.out.println("Old array len = "+currentArray.length);
-                        System.err.println("Available slots old = "+freeInt);
-                        currentArray = resizeArray(currentArray);
-                        freeInt = currentArray.length - usedInt;
-                        System.out.println("New array len = "+currentArray.length);
-                        System.err.println("Available slots new = "+freeInt);
-                    }
-                    break;
-                
-                case "Q":
-                    cont = false;
-                    break;
-                case "q":
-                    cont = false;
-                    break;
-            }
-        }
-
-        scanner.close();
-    }
-
-    private static int[] resizeArray(int[] currentArray){
+    public int[] resizeArray(int[] currentArray){
         int newSize = currentArray.length * 2;
         int[] myNewArray = new int[newSize];
 
@@ -96,13 +11,13 @@ public class ResizableArray{
         return myNewArray;
     }
 
-    private static void printArray(int[] mainArray){
+    public void printArray(int[] mainArray){
         for(int i = 0; i < mainArray.length; i++){
             System.out.println("Index "+i+" = "+mainArray[i]);
         }
     }
     
-    private static int[] addNum(int num, int[] array, int freePos, int usedPos){
+    public int[] addNum(int num, int[] array, int freePos, int usedPos){
         array[usedPos] = num;
         usedPos++;
         freePos--;
@@ -114,7 +29,7 @@ public class ResizableArray{
     }
 
 
-    private static int deleteByIndex(int index, int[] array){
+    public int deleteByIndex(int index, int[] array){
         int temp = array[index];
         array[index] = -1;
 
@@ -126,7 +41,7 @@ public class ResizableArray{
         return temp;
     }
 
-    private static int[] enterAtIndex (int num, int index, int freePos,int usedPos, int[] array){
+    public int[] enterAtIndex (int num, int index, int freePos,int usedPos, int[] array){
         for(int i = usedPos; i > index; i--){
             array[i] = array[i-1];
         }
