@@ -18,13 +18,41 @@ public class ResizableArray{
         add(num, position);
     }
 
+    public int countNums(){
+        return count();
+    }
+
+    public int countCapacity(){
+        return freeCapacity();
+    }
+
+    public int getSize(){
+        return arraySize();
+    }
+
+    public int findNum(int num){
+        return findNext(num, 0);
+    }
+
+    public int findNum(int num, int index){
+        return findNext(num, index);
+    }
+
+    public int removeNum(int num){
+        return removeAll(num);
+    }
+
+    public void insertAtBeginning(int num){
+        add(num, 0);
+    }
+
 
     public void deleteByIndex(int index){
         currentArray[index] = -1;
     }
 
     //return next free position
-    public int findNextFreePosition(){
+    private int findNextFreePosition(){
         int  index   = 0;
         int position = currentArray[index];
 
@@ -62,19 +90,23 @@ public class ResizableArray{
         System.out.println("end of finding next posituing");
         currentArray[nextIndex] = number;
         
+        
         System.out.println("end priv method, returning "+nextIndex);
         return nextIndex; 
     }
 
     //add new number at specific index
     private void add(int number, int index){
-        if(!(index < currentArray.length)){
+        if(!(index < currentArray.length && index >= 0)){
             System.out.println("Index out of range");
         }
 
-        if(currentArray[index] != -1){
-            System.out.println("conflict at position");
+        if(index != 0){
+            if(currentArray[index] != -1){
+                System.out.println("conflict at position");
+            }
         }
+        
 
         int freeIndexCOunt = freeCapacity();
         
@@ -82,7 +114,7 @@ public class ResizableArray{
             resize();
         }
         
-        for(int i = currentArray.length -2; i > index; i--){
+        for(int i = currentArray.length -2; i >= index; i--){
             currentArray[i+1] = currentArray[i]; 
         }
 
@@ -107,5 +139,48 @@ public class ResizableArray{
         currentArray = temp;
         System.out.println("done resizing, new len = "+currentArray.length);
 
+    }
+
+
+    //find first occurance from given point
+    private int findNext(int number, int startIndex){
+        for(int i = startIndex; i < currentArray.length; i++){
+            if(currentArray[i] == number){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    //remove all occurances of number
+    private int removeAll(int number){
+        int count = 0;
+        for (int i = 0; i < currentArray.length; i++){
+            if(currentArray[i] == number){
+                currentArray[i] = -1;
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    //count entered ints
+    private int count(){
+        int count = 0;
+
+        for(int i =0; i < currentArray.length; i++){
+            if(currentArray[i] != -1){
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    //return array size
+    private int arraySize(){
+        return currentArray.length;
     }
 }
