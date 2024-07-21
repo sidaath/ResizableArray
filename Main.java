@@ -32,9 +32,7 @@ public class Main{
                 case 2:
                     System.out.println("Enter number to add:");
                     int num = choiceScanner.nextInt();
-                    System.out.println("after scan");
                     resizableArray.addNum(num);
-                    System.out.println("after call");
                     break;
                 
                 case 3:

@@ -10,7 +10,6 @@ public class ResizableArray{
     }
     
     public int addNum(int num){
-        System.out.println("calling private methpd");
         return add(num);
     }
 
@@ -78,20 +77,14 @@ public class ResizableArray{
 
     //add new number at next available position
     private int add(int number){
-        System.out.println("begin privat method add");
         int freeIndexCount  = freeCapacity();
-        System.out.println("end of free capacity");
 
         if(freeIndexCount <= currentArray.length/4){
             resize();
         }
-        System.out.println("begin find next pos");
         int nextIndex       = findNextFreePosition();
-        System.out.println("end of finding next posituing");
         currentArray[nextIndex] = number;
         
-        
-        System.out.println("end priv method, returning "+nextIndex);
         return nextIndex; 
     }
 
